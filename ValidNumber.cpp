@@ -3,44 +3,31 @@
 #include <string.h>
 
 class Solution {
-
-
     public:
-
-
 
         int is_state(const char * buf, int len)
         {
             char c = buf[0];
-
             if( 0 == strncmp("log", buf, len ) || 0 == strncmp("l", buf, 1 ))
             {
                 return 2;
             }
-
             if (c == 'e')
             {
                 return 1;
             }
-
             if (c == '.' )
             {
                 return 3;
             }
-
-
             if (c == '+')
                 return 4;
-
             if (c == '-' )
                 return 5;
-
             if (c>= '0' && c <= '9')
                 return 6;
-
             if (c == ' ')
                 return 7;
-
             else
                 return -1;
         }
