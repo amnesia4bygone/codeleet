@@ -195,7 +195,7 @@ int main(void)
         vector<vector<char> > board;
         vector<char> one;
 
-        one.push_back('.');
+        one.push_back('1');
         one.push_back('.');
         one.push_back('.');
         one.push_back('.');
