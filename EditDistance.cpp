@@ -1,185 +1,113 @@
-/*
-"b", "" 1       1       
-   
-"a", "a"        0       0       
-   
-"a", "b"        1       1       
-   
-"a", "ab"       1       1       
-   
-"ab", "a"       1       1       
-   
-"ab", "bc"      2       2       
-   
-"sea", "ate"    1       3       
-   
-"sea", "eat"    1       2       
-   
-"mart", "karma" 3       3       
-   
-"park", "spake" 3       3       
-   
-"food", "money" 7       4       
-   
-"horse", "ros"  2       3       
-   
-"spartan", "part"       3       3       
-   
-"plasma", "altruism"    6       6       
-   
-"kitten", "sitting"     5       3       
-   
-"islander", "islander"  0       0       
-"islander", "slander"   1       1       
-"industry", "interest"  8       6       
-"intention", "execution"        8       5       
-"prosperity", "properties"      7       4       
-"algorithm", "altruistic"
-
-*/
-
-
-
+#include <string>
+using namespace std;
 
 class Solution {
-public:
+    public:
+
+        int data[1000][1000];
 
 
-    int minDistance(string word1, string word2) {
-        // Start typing your C/C++ solution below
-        // DO NOT write int main() function
-        int len1 = word1.length();
-        int len2 = word2.length();
-
-        int i=0; 
-        int j=0;
-
-        int number = 0;
-        while(i<len1 || j<len2)
+        int min(int x, int y, int z)
         {
-                if (word1[i] == word2[j])
-                {
-                        i++;
-                        j++;
-                }
-                else if ( (len1-i) > (len2-j) )
-                {
-                        // delete here
-                        number ++;
-                        i++;
-                }
-                else if ( (len1-i) == (len2 - j)  )
-                {
-                        // replace here
-                        number ++;
-                        i++; j++;
-                }
-                else
-                {
-                        // delete here
-                        number++;
-                        j++;
-                }
+            if (x < y && x<z)
+            {
+                return x;
+            }
+            else if (y<z)
+            {
+                return y;
+            }
+            else
+                return z;
         }
-        return number;
-    }   
-};
 
-/*
-class Solution {
-public:
-
-    int find_diff(vector<char > &c1, vector<char > &c2)
-    {
-        int i=0 ; 
-        int j=0;
-        
-        int number = 0;
-        
-        while(i<c1.size() || j<c2.size())
+        int f(char x, char y)
         {
-            if (i==c1.size() )
+            if (x==y)
             {
-                j++;
-                number++;
-                continue;
-            }
-            
-            if (j == c2.size())
-            {
-                i++;
-                number ++;
-                continue;
-            }
-            
-            if (c1[i] == c2[j])
-            {
-                i++;
-                j++;
-            }
-            else if (c1[i] > c2[j] )
-            {
-                number ++;
-                j++;
+                return 0;
             }
             else
             {
-                number ++;
-                i++;
+                return 1;
             }
-            
         }
-        return number;
-    }
 
-    int minDistance(string word1, string word2) {
-        // Start typing your C/C++ solution below
-        // DO NOT write int main() function
-        
-        
-        //sort
-        vector<char > c1;
-        vector<char > c2;
-        
-        if (word1.length() == 0 && word2.length() == 0)
-            return 0;
-            
-        if (word1.length() ==0 )
-            return word2.length();
-        
-        if (word2.length() == 0)
-            return word1.length();
-        
-        for(int i=0; i<word1.length(); i++)
+        int cal(string word1, string word2)
         {
-            char a = word1[i];
-            c1.push_back(a);
-        }
-        for(int i=0; i<word2.length(); i++)
-        {
-            char a = word2[i];
-            c2.push_back(a);
-        }        
-        
-        sort(c1.begin(), c1.end());
-        sort(c2.begin(), c2.end());
-        
-        
-        int number =0;
-        
-        //alian count insert / delete
-        if (c1.size() == c2.size() )
-        {
-            for (int i=0; i<c1.size(); i++)
-            {
-                if (c1[i] != c2[i])
-                    number++;
+            int len1 = word1.length();
+            int len2 = word2.length();
+
+            if (len1==0 && len2 == 0)
+                return 0;
+
+            if (len1==0)
+                return len2;
+
+            if (len2 == 0)
+                return len1;
+
+
+            if (word1[0] == word2[0])
+                data[1][1] = 0;
+            else
+                data[1][1] = 1;
+
+            data[0][0] = 0;
+            data[0][1] = 1;
+            data[1][0] = 1;
+
+
+            int i=1;
+            int j=1;
+            int flag = 0;
+
+            for (int i=1; i<=len1; i++)
+            {   
+                for (int j=1; j<=len2; j++)
+                {
+                    //printf("--%d %d--\n", i, j);
+                    int I1 = data[i-1][j] + 1;
+
+                    int J1 = data[i][j-1] + 1;
+
+                    int I1J1 = data[i-1][j-1] + f(word1[i-1], word2[j-1]);
+
+                    data[i][j] = min(I1, J1, I1J1);
+                    //printf("--%d %d = %d %d %d--\n", i,j,I1, J1, I1J1);
+                }
             }
-            return number;
+
+            return data[len1][len2];
+
         }
-        else 
-        {
-            return find_diff(c1, c2);
+
+        int minDistance(string word1, string word2) {
+            // Start typing your C/C++ solution below
+            // DO NOT write int main() function
+            for(int i=0; i<1000; i++)
+            {
+                for(int j=0; j<1000; j++)
+                {
+                    data[i][j] = 99999;
+                }
+            }      
+
+            return cal(word1, word2);
         }
-    }   
-}; */
+};
+
+
+
+#if 0
+int main(void)
+{
+        string a("park");
+        string b("spake");
+        Solution s;
+        int x = s.minDistance(a, b);
+        printf("--%d--\n", x);
+        return 0;
+}
+#endif
+
