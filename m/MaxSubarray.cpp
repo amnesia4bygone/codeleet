@@ -1,7 +1,6 @@
 class Solution {
     public:
 
-        vector<int > tmp_val;
 
         int maxSubArray(int A[], int n) {
             // divide and conquer
