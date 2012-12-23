@@ -7,87 +7,59 @@
  * };
  */
 class Solution {
-    public:
-        ListNode *reverseBetween(ListNode *head, int m, int n) {
-            // Start typing your C/C++ solution below
-            // DO NOT write int main() function
-
-            if (m==n)
-                return head;
-
-            if (head == NULL)
-                return NULL;
-
-            ListNode * p_m = head;
-            ListNode * p_m_pre = NULL;
-
-            ListNode * p_n = head;
-            ListNode * p_n_pre = NULL;
-
-            ListNode * tmp_head = head;
-
-
-
-
-            int len=1;
-
-            int i=1;
-            while( i<n && p_n != NULL)
+public:
+    ListNode *reverseBetween(ListNode *head, int m, int n) {
+        if (head==NULL)
+            return NULL;
+        if (n==m || n==1)
+            return head;
+            
+        ListNode * pre = NULL; // node before reverse 
+        ListNode * tmp = head;
+        ListNode * reverse_end = head;
+        
+        for(int i=0; i<m-1 ;i++)
+        {
+            pre = tmp;
+            tmp = tmp->next;
+        }
+        
+        ListNode * reverse_head = NULL;
+        ListNode * tail = NULL;
+        ListNode * cur = NULL;
+        int i=0; 
+        while(i < (n-m+1))
+        {
+            tail = tmp->next;
+            cur = tmp;
+            tmp = tmp->next;
+            
+            if (reverse_head == NULL)
             {
-                if ( i<m && p_m != NULL)
-                {
-                    p_m_pre = p_m;
-                    p_m = p_m->next;
-                }
-
-                p_n_pre = p_n;
-                p_n = p_n->next;
-                i++;
-                len++;
+                reverse_head = cur;  
+                reverse_head->next = NULL;
+                reverse_end = cur;
             }
-
-            // only 2 number
-            if (len==2)
+            else
             {
-                tmp_head = p_n;
-                p_n->next = p_m;
-                p_m->next = NULL;
-                return tmp_head;
+                cur->next = reverse_head;
+                reverse_head = cur;
             }
-
-
-
-            //m==1
-            if (p_m_pre == NULL)
-            {
-                tmp_head = p_n;
-                ListNode * tmp = p_m->next;
-                p_n_pre->next = p_m;
-                p_m->next = p_n->next;
-                p_n->next = head->next;
-
-
-                return tmp_head;
-            }
-
-            // m +1 == n
-            if (p_m == p_n_pre)
-            {
-                ListNode * tmp = p_n->next;
-                p_m_pre->next = p_n->next;
-                p_n->next = p_m;
-                p_m->next = tmp;
-                return head;
-            }
-
-
-            // normal 
-            ListNode * tmp = p_m->next;
-            p_m_pre->next = p_n;
-            p_m->next = p_n->next;
-            p_n_pre->next = p_m;
-            p_n->next = tmp; 
-
+            i++;
+        }
+        
+        reverse_end->next = tail;
+        
+        if (m==1)
+        {
+            return reverse_head;
+        }
+        else
+        {
+            pre->next = reverse_head;
             return head;
         }
+        
+        
+    }
 };
