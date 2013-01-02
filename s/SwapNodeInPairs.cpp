@@ -24,10 +24,10 @@ public:
         ListNode * p_one = head;
         ListNode * p_two = head->next;
         
-        p_tow->next = p_one;
+        p_two->next = p_one;
         p_one->next = NULL;
         *next = p_one;
-        return p_one;
+        return p_two;
         
     }
     
@@ -59,6 +59,7 @@ public:
         ListNode * next = head;
         ListNode * new_head = NULL;
         ListNode * pre = head;
+        ListNode * pre_head = NULL;
         
         while(next != NULL)
         {
@@ -73,21 +74,32 @@ public:
                     tmp->next = next;
                 else
                     new_head->next = NULL;
+                
+                /*if (pre->next)
+                    pre_head = pre->next;
+                else */
+                pre_head = tmp;    
                 pre = next;
+                
             }
             else
             {
                 next = getNext(pre);
                 
                 ListNode * tmp = NULL;
-                new_head = swapTwoNode(pre, &tmp);
+                ListNode * tmp_head = NULL;
+                tmp_head = swapTwoNode(pre, &tmp);
                 
-                pre->next = new_head;
+                pre_head->next = tmp_head;
+                pre_head = tmp;
+                
                 
                 if (tmp)
                     tmp->next = next;
                 else
-                    new_head->next = NULL;
+
+                    tmp_head->next = NULL;
+                    
                 pre = next;
                 
             }
