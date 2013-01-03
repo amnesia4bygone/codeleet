@@ -9,17 +9,51 @@ public:
             else
                 return 0;
         }
-        
+        int m = obstacleGrid.size() +1;
+        int n = obstacleGrid[0].size() +1;
+                
         
         vector<vector<int> > route;
         
         vector<int> one_line ;
-        one_line.push_back(1);
-        route.push_back(one_line);
+        for(int i=0; i<m;i++)
+        {
+            route.push_back(one_line);
+            route[i].push_back(1);
+        }
+        for (int i=0; i<n; i++)
+            route[0][i] = 1;
         
-        int m = obstacleGrid.size();
-        int n = obstacleGrid[0].size();
+          
+        for(int i=1; i<=m ; i++)
+        {
+            for(int j=1; j<=n; j++)
+            {
+                if(i==1 && j==1)
+                {
+                    route[1][1] = 1;
+                    continue;
+                }
+                
+                int left; 
+                int top;
+                
+                if ( obstacleGrid[i-1][j] ==1 )
+                    top = 0;
+                else
+                    top = route[i-1][j];
+                    
+                if (j==0|| obstacleGrid[i][j-1] ==1 )
+                    left = 0;
+                else
+                    left = route[i][j-1];
+                
+                route[i][j] = top + left;
+            }
+        }
+        return route[m-1][n-1];
         
+/*
         for(int i=1; i<m+n; i++)
         {
              int x = 0;
@@ -63,8 +97,10 @@ public:
                 
                  x++;
              }
-        }
-        return route[m-1][n-1];
+        }*/
+        
+        
+        
         
     }
 };
