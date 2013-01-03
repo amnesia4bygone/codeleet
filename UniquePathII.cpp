@@ -1,7 +1,6 @@
 class Solution {
 public:
     int uniquePathsWithObstacles(vector<vector<int> > &obstacleGrid) {
-        // Start typing your C/C++ solution below
         // DO NOT write int main() function
         if (obstacleGrid.size() == 1)
         {
@@ -25,15 +24,22 @@ public:
         {
              int x = 0;
              int y = i;
-             if (y>=n)
-             {
-                 y = n-1;
-                 x += i-y;
-             }
+
              
-             while(x >= m)
+             while(x < m)
              {
-                 
+                 if (y>=n)
+                 {
+                     y = n-1;
+                     x = i-y;
+                 }
+                 if (x>=m)
+                 {
+                     x =m-1;
+                     y = i - x;
+                 }
+             
+             
                  int left;
                  if (obstacleGrid[x][y-1] == 0 )
                     left = route[x][y-1];
@@ -41,7 +47,7 @@ public:
                     left = 0;
                     
                  int top;
-                 if (obstacleGrid[x][y-1] == 0) 
+                 if (obstacleGrid[x-1][y] == 0) 
                     top = route[x-1][y];
                  else
                     top = 0;
@@ -54,6 +60,8 @@ public:
                     route[x].push_back(top);
                  else
                     route[x].push_back( top + left  ) ;
+                
+                 x++;
              }
         }
         return route[m-1][n-1];
