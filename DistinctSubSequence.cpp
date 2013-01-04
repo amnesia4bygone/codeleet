@@ -21,32 +21,24 @@ public:
 
         store[0][0] = 0;
         store[1][0] = 0;
-        store[0][1] = 0;
+        //store[0][1] = 0;
+        for(int i=1; i<=len_s; i++)
+        {
+            if (S[i-1] == T[0])
+                store[1][i] = 1 + store[1][i-1];
+            else
+                store[1][i] = store[1][i-1];
+        }
+
+        
         if ( S[0] == T[0] )
             store[1][1] = 1;
         else
             store[1][1] = 0;
         
-        /*
-        for(int i=1; i<=len_s; i++)
-        {
-            if (S[i] == T[0])
-            {
-                store[1][i] = store[1][i-1] +1;
-            }
-            else
-            {
-                store[1][i] = store[1][i-1];
-            }
-        }
+
         
-        
-        for(int j=2; j<=len_t; j++)
-        {
-            
-        }*/
-        
-        for(int j=1; j<=len_t; j++ )
+        for(int j=2; j<=len_t; j++ )
         {
             for(int i=2; i<=len_s; i++)
             {   
