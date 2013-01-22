@@ -1,5 +1,81 @@
 class Solution {
 public:
+    bool isInterleave(string s1, string s2, string s3) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function    
+        int len1 = s1.length();
+        int len2 = s2.length();
+        int len3 = s3.length();
+        
+        // bug
+        if (len1 + len2 != len3)
+            return false;
+
+        vector< vector<int> > M = vector< vector<int> >(len1+1, vector<int>(len2+1, 0) );
+        
+        if (len1 == 0 && len2 == 0)
+        {
+            if (len3 == 0) return true;
+            else    return false;
+        }
+        
+        if (len1 == 0 )
+        {
+            if (s3 == s2) return true;
+            else return false;
+        }
+        
+        if (len2 == 0)
+        {
+            if (s1 == s3) return true;
+            else return false;
+        }
+        
+        for(int i=1; i<=len1; i++)
+        {
+            string s(s1, 0 , i );
+            string sub_s3 (s3, 0, i);
+            
+            if (s == sub_s3)
+                M[i][0] = 1;
+        }
+        
+        for(int i=1; i<=len2; i++)
+        {
+            string s(s2, 0 , i );
+            string sub_s3 (s3, 0, i);
+            
+            if (s == sub_s3)
+                M[0][i] = 1;
+        }
+            
+        
+        for(int i=1; i<=len1; i++)
+        {
+            for(int j=1; j<=len2; j++)
+            {
+                // bug, s index error
+                if ( s3[i+j-1] == s2[j-1] && M[i][j-1] == 1)
+                    M[i][j] = 1;
+                
+                // missing this logic
+                if (s3[i+j-1] == s1[i-1] && M[i-1][j] == 1)
+                    M[i][j] = 1;
+            
+            }
+        }
+        
+        if( M[len1][len2] == 1) return true;
+        else return false;
+        
+        
+    }
+};
+
+/*
+
+class Solution {
+public:
 
     
 
@@ -65,4 +141,4 @@ public:
         return false;
         
     }
-};
+}; */
