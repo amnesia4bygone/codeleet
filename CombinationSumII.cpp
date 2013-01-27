@@ -42,6 +42,15 @@ void debug2(vector<vector<int>  > &x)
 
 class Solution {
 public:
+    void uniq_insert(vector<vector<int> > &result, vector<int > &tmp)
+    {
+      vector<vector<int> > :: iterator it;
+	  it = find( result.begin(), result.end(), tmp );
+	  if (it == result.end() )
+		result.push_back(tmp);
+    }    
+
+
     vector<vector<int> > combinationSum2(vector<int> &num, int target) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
@@ -79,22 +88,22 @@ public:
                 for(int n=0; n<S[j].size(); n++)
                 {
                     vector<int > tmp_one = S[j][n];
-		    if (tmp_one.size() == 0)
-			continue;
+		    //if (tmp_one.size() == 0)
+		//	continue;
                     tmp_one.push_back(k);  
                     
-		    printf("*** %d %d %d\n", j+k,  i, tmp_one.size());
+		    printf("*** %d %d %d\n", j+k,  k, tmp_one.size());
  
                     if ( (j+k) < target)
                     {
 			printf("bbb\n");
                          S[j+k].push_back(tmp_one); 
-			debug(S);
+			//debug(S);
                     }
                     else if (j+k == target)
                     {
 			printf("aaa\n");
-                        result.push_back(tmp_one);
+                        uniq_insert(result,tmp_one);
                     }
                 }
                 
@@ -102,7 +111,7 @@ public:
             if(k< target ) 
                 S[k].push_back(tmp);
             else  // == target
-            {    result.push_back(tmp);
+            {    uniq_insert( result, tmp);
 		}
 		debug(S);
         }
@@ -117,14 +126,14 @@ int main(void)
 {
 	Solution s;	
 	vector<int> x;
-	x.push_back(2);
+	x.push_back(10);
 	x.push_back(1);
-	s.combinationSum2(x, 3);
 	x.push_back(6);
 	x.push_back(7);
 	x.push_back(2);
 	x.push_back(1);
 	x.push_back(5);
+	s.combinationSum2(x, 8);
 	return 1;
 
 }
