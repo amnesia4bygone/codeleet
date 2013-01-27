@@ -68,7 +68,6 @@ public:
         for(int i=0; i<num.size(); i++)
         {
             int k = num[i];
-        	printf("k is %d\n", k);    
             if (k > target)
                 continue;
             
@@ -77,32 +76,24 @@ public:
             
             for(int j=len-1; j>0; j--)
             {
-		printf("j+k is %d\n", j+k);
                 if (j+k > target)
                     continue;
                 M[j + k] = 1;
 		
-		printf("sj size is %d\n", S[j].size());
                 if (S[j].size() == 0)
 			continue;
                 for(int n=0; n<S[j].size(); n++)
                 {
                     vector<int > tmp_one = S[j][n];
-		    //if (tmp_one.size() == 0)
-		//	continue;
                     tmp_one.push_back(k);  
                     
-		    printf("*** %d %d %d\n", j+k,  k, tmp_one.size());
  
                     if ( (j+k) < target)
                     {
-			printf("bbb\n");
                          S[j+k].push_back(tmp_one); 
-			//debug(S);
                     }
                     else if (j+k == target)
                     {
-			printf("aaa\n");
                         uniq_insert(result,tmp_one);
                     }
                 }
@@ -126,14 +117,14 @@ int main(void)
 {
 	Solution s;	
 	vector<int> x;
-	x.push_back(10);
-	x.push_back(1);
-	x.push_back(6);
+	x.push_back(8);
 	x.push_back(7);
+	x.push_back(4);
+	x.push_back(3);
+	s.combinationSum2(x, 11);
 	x.push_back(2);
 	x.push_back(1);
 	x.push_back(5);
-	s.combinationSum2(x, 8);
 	return 1;
 
 }
