@@ -70,7 +70,7 @@ public:
             {
 		printf("j+k is %d\n", j+k);
                 if (j+k > target)
-                    break;
+                    continue;
                 M[j + k] = 1;
 		
 		printf("sj size is %d\n", S[j].size());
@@ -85,7 +85,7 @@ public:
                     
 		    printf("*** %d %d %d\n", j+k,  i, tmp_one.size());
  
-                    if (j+k < target)
+                    if ( (j+k) < target)
                     {
 			printf("bbb\n");
                          S[j+k].push_back(tmp_one); 
@@ -117,14 +117,14 @@ int main(void)
 {
 	Solution s;	
 	vector<int> x;
-	x.push_back(10);
+	x.push_back(2);
 	x.push_back(1);
+	s.combinationSum2(x, 3);
 	x.push_back(6);
 	x.push_back(7);
 	x.push_back(2);
 	x.push_back(1);
 	x.push_back(5);
-	s.combinationSum2(x, 8);
 	return 1;
 
 }
