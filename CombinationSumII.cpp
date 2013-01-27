@@ -61,8 +61,8 @@ public:
             return result;
         
         int len = num.size();
-        vector< vector< vector<int>  > > S = vector<vector<vector<int> > >(len+1, vector<vector<int> >() );
-        vector<int> M = vector<int>(len+1, 0);
+        vector< vector< vector<int>  > > S = vector<vector<vector<int> > >(target+1, vector<vector<int> >() );
+        vector<int> M = vector<int>(target+1, 0);
         M[0] = 1;
         
         for(int i=0; i<num.size(); i++)
@@ -74,7 +74,7 @@ public:
             M[k] = 1;
             vector<int> tmp(1, k);
             
-            for(int j=len-1; j>0; j--)
+            for(int j=target-1; j>0; j--)
             {
                 if (j+k > target)
                     continue;
