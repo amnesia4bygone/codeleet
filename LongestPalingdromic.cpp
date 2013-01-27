@@ -53,6 +53,9 @@ public:
             string one = M[i];
             int cur = i; 
             int first = i - M[i].length() -1;
+            string tmp(1, s[i]);
+            M[i+1] = tmp;
+            
             
             if (first >= 0) 
             {
